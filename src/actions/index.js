@@ -1,0 +1,36 @@
+import { EMAIL_CHANGE, PASSWORD_CHANGE, LOG_IN } from './types';
+import * as firebase from 'firebase';
+import LoginForm from '../components/LoginForm';
+
+export const emailChange = text => {
+    return {
+        type: EMAIL_CHANGE,
+        payload: text
+    };
+};
+
+export const passwordChange = text => {
+    return {
+        type: PASSWORD_CHANGE,
+        payload: text
+    }
+}
+
+// make sure aynch promise with then function can not be used in action creator
+// The reason we need to use redux thunk is to use a callback invocation in the second function.
+// "dispatch" is a call back to deliver "action" to a reducer.
+// When the asychronous function is finished, (if it is simple redux action creator), 
+//  there is is no way to deliver the value to reducer because the general redux can just return object only.
+// In order to eventually deliver the action value with asynchronous function, we need another function
+//  that will be able to invoke the callback, "dispatch".
+
+export const loginUser = ({ email, password }) => dispatch => {
+    console.log(email, password)
+    firebase.auth().signInWithEmailAndPassword(email, password)
+        .then(user => {
+            console.log(user)
+            dispatch({ type: LOG_IN,  payload: user })
+        })
+    
+  
+}
