@@ -1,6 +1,5 @@
-import { EMAIL_CHANGE, PASSWORD_CHANGE, LOG_IN } from './types';
+import { EMAIL_CHANGE, PASSWORD_CHANGE, LOG_IN, LOG_IN_FAIL } from './types';
 import * as firebase from 'firebase';
-import LoginForm from '../components/LoginForm';
 
 export const emailChange = text => {
     return {
@@ -25,12 +24,21 @@ export const passwordChange = text => {
 //  that will be able to invoke the callback, "dispatch".
 
 export const loginUser = ({ email, password }) => dispatch => {
-    console.log(email, password)
-    firebase.auth().signInWithEmailAndPassword(email, password)
-        .then(user => {
-            console.log(user)
-            dispatch({ type: LOG_IN,  payload: user })
-        })
     
-  
+        console.log('success')
+        firebase.auth().signInWithEmailAndPassword(email, password)
+            .then(user => userAuth(user, dispatch))
+            .catch(() => {
+                firebase.auth().createUserWithEmailAndPassword(email, password)
+                .then(user => userAuth(user, dispatch))
+                .catch(() => authFail(dispatch))
+            })
+}
+
+const userAuth = (user, dispatch) => {
+    dispatch({ type: LOG_IN, payload: user});
+}
+
+const authFail = dispatch => {
+    dispatch({ type: LOG_IN_FAIL })
 }
