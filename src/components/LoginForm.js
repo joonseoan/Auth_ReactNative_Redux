@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import { Card, CardSection, Button, Input } from './common';
+import { Card, CardSection, Button, Input, Spinner } from './common';
 import { connect } from 'react-redux';
 
 import { emailChange, passwordChange, loginUser } from '../actions';
@@ -35,6 +35,19 @@ const LoginForm = props => {
         }
     }
 
+    const renderButton = () => {
+        if(props.loading) {
+            return <Spinner size="large" />;
+        }
+        return (
+            <Button 
+                onPress={ handleLogin }
+            >
+                Login
+            </Button>
+        );
+    }
+
     return (
         <Card>
             <CardSection>
@@ -48,7 +61,7 @@ const LoginForm = props => {
             <CardSection>
                 <Input
                     label="Password"
-                    // value={ props.password }
+                    value={ props.password }
                     placeholder="password"
                     // automatically it is true.
                     secureTextEntry
@@ -57,11 +70,7 @@ const LoginForm = props => {
             </CardSection>
                 { renderError() }
             <CardSection>
-                <Button 
-                    onPress={ handleLogin }
-                >
-                    Login
-                </Button>
+                { renderButton() }
             </CardSection>
         </Card>
     );
@@ -76,11 +85,13 @@ const styles = {
 }
 
 const mapStateToProps = ({ auth }) => {
+    const { email, password, error, loading } = auth;
     console.log('auth: ', auth)
     return { 
-        email: auth.email,
-        password: auth.password,
-        error: auth.error
+        email,
+        password,
+        error,
+        loading
     };
 }
 
@@ -88,5 +99,6 @@ const mapStateToProps = ({ auth }) => {
 export default connect(mapStateToProps, { 
     emailChange, 
     passwordChange, 
-    loginUser 
+    loginUser,
+
 })(LoginForm);
