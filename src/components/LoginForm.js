@@ -85,11 +85,9 @@ const styles = {
 }
 
 const mapStateToProps = ({ auth }) => {
-<<<<<<< HEAD
-=======
+
     const { email, password, error, loading } = auth;
     console.log('auth: ', auth)
->>>>>>> 1f231f8f4f70af92f58b9ec53d23e757eb0dbf7e
     return { 
         email,
         password,
