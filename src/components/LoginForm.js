@@ -55,7 +55,7 @@ const LoginForm = props => {
                     onChangeText={ password => handlePasswordChange(password) }
                 />          
             </CardSection>
-                { renderError() }
+            { renderError() }
             <CardSection>
                 <Button 
                     onPress={ handleLogin }
@@ -76,14 +76,12 @@ const styles = {
 }
 
 const mapStateToProps = ({ auth }) => {
-    console.log('auth: ', auth)
     return { 
         email: auth.email,
         password: auth.password,
         error: auth.error
     };
 }
-
 
 export default connect(mapStateToProps, { 
     emailChange, 
