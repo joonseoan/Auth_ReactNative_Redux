@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 
 import { emailChange, passwordChange, loginUser } from '../actions';
 
-
 const LoginForm = props => {
 
     // const[ email, setEmail ] = React.useState('');
@@ -40,9 +39,7 @@ const LoginForm = props => {
             return <Spinner size="large" />;
         }
         return (
-            <Button 
-                onPress={ handleLogin }
-            >
+            <Button onPress={ handleLogin }>
                 Login
             </Button>
         );
@@ -85,6 +82,7 @@ const styles = {
 }
 
 const mapStateToProps = ({ auth }) => {
+
     const { email, password, error, loading } = auth;
     console.log('auth: ', auth)
     return { 
@@ -94,7 +92,6 @@ const mapStateToProps = ({ auth }) => {
         loading
     };
 }
-
 
 export default connect(mapStateToProps, { 
     emailChange, 

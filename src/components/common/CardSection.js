@@ -4,7 +4,11 @@ import { View } from 'react-native';
 const CardSection = props => {
 
     const { containerStyle } = styles;
-    return(<View style={ containerStyle }>{ props.children }</View>);
+    // use two style object simultaneously.
+    // The last elememnt is always overriding the first.
+    // Therefore, even though flexdirection is "row" here,
+    // the value will be switeched to "column" when "prop.style" is defined
+    return(<View style={ [containerStyle, props.style ]}>{ props.children }</View>);
 }
 
 const styles = {

@@ -1,0 +1,46 @@
+1. firebase database is "json" based datasore
+
+
+Install
+1. visit: firebase
+2. In the left tab, click database
+3. And then click real time database
+4. Click "rules" tab on the top and setup security
+
+{
+  "rules": {
+		"users": {
+      "$uid": {
+        ".read": "$uid === auth.uid",
+        ".write": "$uid === auth.uid"
+      }
+    }
+  }
+}
+
+5. click "publish"
+
+
+
+For instance, (json) 
+based on the rule set up above,
+the database user with "AccessUser(uid)":"123
+can access but cannot read and write in "AccessUser(uid):456" documents.
+
+AccessUser(uid) : 123,
+    employee1:{
+        _id: xxx
+    },
+    employee2:{
+        _id; 2
+    }
+},
+AccessUser(uid) : 456,
+    employee1:{
+        _id: xxx
+    },
+    employee2:{
+        _id; 2
+    }
+},
+
