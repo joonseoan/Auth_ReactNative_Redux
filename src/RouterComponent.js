@@ -18,7 +18,7 @@ const RouterComponent = props => {
                     2) No back button means that
                         it is noty easy to navigate to another wrapping Scene!!
                 */}
-                <Scene key="auth">
+                <Scene key="auth" initial>
                     <Scene 
                         // Because of Expo
                         titleStyle={{ flex:1, paddingTop: 10}}
@@ -45,13 +45,11 @@ const RouterComponent = props => {
                         key="employeeList" 
                         component={ EmployeeList } 
                         title="Employees"
-                        initial
                     />
                     <Scene 
                         // Because of Expo
                         titleStyle={{ flex:1, paddingTop: 10}} 
                         leftButtonStyle={{ paddingTop: 17 }}
-
                         key="employeeCreate" 
                         component={ EmployeeCreate }
                         title="Create Employee"

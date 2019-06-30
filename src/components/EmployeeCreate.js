@@ -8,7 +8,7 @@ import { Card, CardSection, Button, Input } from './common/index';
 const EmployeeCreate = props => {
     const onButtonPress = () => {
         const { name, phone, shift } = props;
-        props.employeeCreate({ name, phone, shift });
+        props.employeeCreate({ name, phone, shift: shift || 'Monday' });
     }
 
     return(
@@ -54,6 +54,8 @@ const EmployeeCreate = props => {
                     // just remind that without "style",it won't render the jsx,
                     // but it will take over the space
                     style={{ flex: 1 }}
+
+                    // setting defalut value
                     selectedValue={ props.shift }
                     onValueChange={ value => props.employeeUpdate({ prop: 'shift', value})} 
                 >
@@ -88,6 +90,8 @@ const mapStateToProps = ({ employeeForm }) => {
     console.log(name, phone)
     return { name, phone, shift };
 }
+
+
 
 export default connect(mapStateToProps, { employeeUpdate, employeeCreate })(EmployeeCreate);
 // export default EmployeeCreate;
