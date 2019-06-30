@@ -1,7 +1,12 @@
 import * as firebase from 'firebase';
 
 // import { EMPLOYEE_CREATE } from './types';
-import { EMPLOYEE_UPDATE, EMPLOYEE_CREATE, EMPLOYEE_FETCH } from './types';
+import { EMPLOYEE_UPDATE, 
+         EMPLOYEE_CREATE, 
+         EMPLOYEE_FETCH,
+         EMPLOYEE_EDT_SAVE,
+         EMPLOYEE_DELETE } from './types';
+
 import { Actions } from 'react-native-router-flux';
 
 export const employeeUpdate = ({ prop, value }) => {
@@ -15,7 +20,7 @@ export const employeeUpdate = ({ prop, value }) => {
 export const employeeCreate = ({ name, phone, shift }) => {
     // console.log(name, phone, shift)
     /* 
-            [Rules we set up in firebase website]
+            [Rules (security) we set up for manager in firebase website]
 
               {
                 "rules": {
@@ -98,5 +103,46 @@ export const employeeFetch = () => {
                 // snapshot.val() ===> returned value
                 dispatch({ type: EMPLOYEE_FETCH, payload: get.val() });
             })
+    }
+}
+
+export const employeeEditSave = ({ name, phone, shift, uid }) => {
+    const { currentUser } = firebase.auth();
+    
+    return dispatch => {
+        // uid: employee's uid, not a manager's uid which is currentUser.id here
+        //         manager-b7288 (firebase creator)
+        //             users (manager: the most parent property)
+        //                 sSRDHgp5r5gA0QnAGXmezoclvJK2  (manager's uid)
+        //                     employees (employees property)
+        //                         -Li_SHXH3sn7t9t46joG (employees's id which is automatically generated)
+        //                             name: 
+        //                             "Joon"
+        //                             phone: 
+        //                             "555-555-5555"
+        //                             shift: 
+        //                             "Monday"
+        firebase.database().ref(`/users/${ currentUser.uid }/employees/${ uid }`)
+            // .set: update
+            .set({ name, phone, shift })
+            .then(() => { 
+                Actions.employeeList({ type: 'reset' });
+                dispatch({ type: EMPLOYEE_EDT_SAVE });
+            })
+            
+    }
+}
+
+export const employeeDelete = ({ uid }) => {
+
+    const { currentUser } = firebase.auth();
+
+    return () => {
+        firebase.database().ref(`/users/${ currentUser.uid }/employees/${ uid }`)
+            // remove data
+            .remove()
+            .then(() => { 
+                Actions.employeeList({ type: 'reset' });
+            });
     }
 }
