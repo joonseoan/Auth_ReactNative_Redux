@@ -4,15 +4,20 @@ import { CardSection } from './common/CardSection';
 import { Actions } from 'react-native-router-flux';
 
 export default props => {
-    const { name } = props.employee;
 
-    console.log('name ========> ', name)
+    const { name } = props.employee.item;
+    console.log('item:  ------------>  ', props.employee.item)
 
     const onRowPress = () => {
+
+        // By using FlatList
+        Actions.employeeEdit({ employee: props.employee.item });
+
+        // By using ListView
         // "employee: props.employee" : sending an employee's information
         // key: employee ==> props key
         // value: props.employee
-        Actions.employeeEdit({ employee: props.employee });
+        // Actions.employeeEdit({ employee: props.employee});
     }
     
     return (

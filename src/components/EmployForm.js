@@ -10,7 +10,6 @@ const EmployeeForm = props => {
 
     return (
         <View>
-
              <CardSection>
                 <Input 
                     label="Name"

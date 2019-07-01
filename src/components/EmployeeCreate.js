@@ -14,7 +14,7 @@ const EmployeeCreate = props => {
         props.employeeUpdate({ prop: 'phone', value: '' });
         props.employeeUpdate({ prop: 'shift', value: 'Monday' });
 
-    })
+    }, [])
 
     const onButtonPress = () => {
         const { name, phone, shift } = props;
@@ -94,7 +94,6 @@ const EmployeeCreate = props => {
 
 const mapStateToProps = ({ employeeForm }) => {
     const { name, phone, shift } = employeeForm;
-    console.log(name, phone, shift)
     return { name, phone, shift };
 }
 
