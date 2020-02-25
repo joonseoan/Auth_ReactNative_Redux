@@ -2,6 +2,7 @@ import React from 'react';
 import { Text, View } from 'react-native';
 
 const Header = ({ headerText }) => {
+    console.log('headerText: ---> ', headerText)
     const { textStyle, viewStyle } = style;
     return (
         <View style={ viewStyle }>

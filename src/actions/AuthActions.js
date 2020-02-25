@@ -18,7 +18,7 @@ export const passwordChange = text => {
 }
 
 // make sure aynch promise with then function can not be used in action creator
-// The reason we need to use redux thunk is to use a callback invocation in the second function.
+// The reason we need to use redux thunk is to use a callback invocation as a second chaining function.
 // "dispatch" is a call back to deliver "action" to a reducer.
 // When the asychronous function is finished, (if it is simple redux action creator), 
 //  there is is no way to deliver the value to reducer because the general redux can just return object only.
@@ -40,12 +40,13 @@ export const loginUser = ({ email, password }) => dispatch => {
 
 const userAuth = (user, dispatch) => {
     dispatch({ type: LOG_IN, payload: user});
+
     // It is a key name!!!! in RouterComponent
 
     // when LoginForm is together with EmployeeList in a Root Scene
     // Actions.employeeList();
 
-    // when LoginFor and EmployeeList are placed in the separate Scenes
+    // when LoginForm and EmployeeList are placed in the separate Scenes
     // we must call the parent Scene, not the child Scene
     Actions.main();
 }

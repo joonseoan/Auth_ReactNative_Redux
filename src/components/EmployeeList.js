@@ -31,8 +31,11 @@ const EmployeeList = props => {
         );
     }
 
+    
+
     return (
        <FlatList
+            
             data={ props.employees }
 
             // how to render each individual library
